@@ -13,12 +13,10 @@ namespace SistemaHospital
         public DateTime DataNascimento { get; set; }
         public char Sexo { get; set; }
         public int Idade => DateTime.Now.Year - DataNascimento.Year;
-        public Pessoa Paciente { get; set; }
 
-        List<Pessoa> filaPrioritaria = new List<Pessoa>();
-        List<Pessoa> filaNormal = new List<Pessoa>();
-        List<FilaPreferencial> filapreferencial = new List<FilaPreferencial>();
-        List<FilaNormal> filanormal = new List<FilaNormal>();
+        List<Pessoa> preferencial = new List<Pessoa>();
+        List<Pessoa> normal = new List<Pessoa>();
+        int cont = 0;
 
         public string InformacoesPessoa()
         {
@@ -28,10 +26,6 @@ namespace SistemaHospital
                    $"\nIdade: {Idade}" +
                    $"\nSexo = {Sexo}" +
                    $"\n---------------------";
-        }
-        public override string ToString()
-        {
-            return $"Nome: {Nome}";
         }
         public Pessoa(string nome, float cpf, DateTime dataNascimento, char sexo)
         {
@@ -43,10 +37,7 @@ namespace SistemaHospital
         public Pessoa()
         {
         }
-        public Pessoa(Pessoa paciente)
-        {
-            Paciente = paciente;
-        }
+
         public void CadastrarPessoaRecepcao()
         {
             string cpff;
@@ -86,28 +77,57 @@ namespace SistemaHospital
             if (paciente.Idade >= 60)
             {
                 Console.WriteLine("\n\t--->> Fila Prioritária <<----");
-                filaPrioritaria.Add(paciente);
+                preferencial.Add(paciente);
                 Console.ReadKey();
             }
             else
             {
                 Console.WriteLine("\n\t--->> Fila Normal <<----");
-                filaNormal.Add(paciente);
+                normal.Add(paciente);
                 Console.ReadKey();
             }
         }
         public void ExibirPessoasFilaPrioritaria()
         {
             Console.Clear();
-            filaPrioritaria.ForEach(paciente => Console.WriteLine(paciente.InformacoesPessoa()));
+            preferencial.ForEach(paciente => Console.WriteLine(paciente.InformacoesPessoa()));
             Console.ReadKey();
         }
         public void ExibirPessoasFilaNormal()
         {
             Console.Clear();
-            filaNormal.ForEach(paciente => Console.WriteLine(paciente.InformacoesPessoa()));
+            normal.ForEach(paciente => Console.WriteLine(paciente.InformacoesPessoa()));
             Console.ReadKey();
         }
 
+        public void chamarTriagem()
+        {
+            Pessoa paciente;
+            if (cont < 2)
+            {
+                Console.WriteLine(preferencial[0].InformacoesPessoa());
+                paciente = preferencial[0];
+                preferencial.Remove(preferencial[0]);
+                InformacoesTriagem(paciente);
+            }
+            else
+            {
+                Console.WriteLine(normal[0].InformacoesPessoa());
+                paciente = normal[0];
+                InformacoesTriagem(paciente);
+                cont = 0;
+            }
+            
+        }
+
+        public void InformacoesTriagem(Pessoa paciente)
+        {
+            Console.Write("Informe os Batimentos cardíacos: ");
+            int batimentos = int.Parse(Console.ReadLine());
+            Console.Write("Informe a Saturação: ");
+            int saturacao = int.Parse(Console.ReadLine());
+
+
+        }
     }
 }

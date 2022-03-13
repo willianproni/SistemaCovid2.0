@@ -21,7 +21,7 @@ namespace SistemaHospital
                         pessoa.CadastrarPessoaRecepcao();
                         break;
                     case "2":
-                        //pessoa.chamarPacienteTriagem();
+                        pessoa.chamarTriagem();
                         Console.ReadKey();
                         break;
                     case "3":
