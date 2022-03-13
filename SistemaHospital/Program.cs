@@ -35,6 +35,9 @@ namespace SistemaHospital
                             case "2":
                                 pessoa.ExibirPessoasFilaNormal();
                                 break;
+                            case "3":
+                                pessoa.ExibirPessoasInternadas();
+                                break;
                             case "0":
                                 break;
                             default:
@@ -49,7 +52,6 @@ namespace SistemaHospital
                         break;
                 }
             } while (opc != "0");
-
         }
 
         public static void MenuPrincipal()
@@ -69,13 +71,11 @@ namespace SistemaHospital
             Console.WriteLine("----- Explorar Filas -----" +
                               "\n[1] - Fila Prioritário" +
                               "\n[2] - Fila Normal" +
+                              "\n[3] - Internados" +
                               "\n[0] - Voltar pro Menu Principal" +
                               "\n--------------------------");
             Console.Write("Opção: ");
         }
-        public static void ExibirFilaPrioridade()
-        {
 
-        }
     }
 }
