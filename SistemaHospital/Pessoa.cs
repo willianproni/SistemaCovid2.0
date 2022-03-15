@@ -19,7 +19,8 @@ namespace SistemaHospital
 
         List<Pessoa> preferencial = new List<Pessoa>();
         List<Pessoa> normal = new List<Pessoa>();
-        List<Pessoa> Internados = new List<Pessoa>();
+        List<Pessoa> internados = new List<Pessoa>();
+        List<Pessoa> todosPacientes = new List<Pessoa>();
         int cont = 0;
 
         public string InformacoesPessoa()
@@ -42,6 +43,17 @@ namespace SistemaHospital
                    $"\n{Triagem.ToString()}" +
                    $"\n---------------------";
         }
+
+        public string IformacoesTriagem()
+        {
+            Console.Clear();
+            return $"\t\t---------- Triagem -----------\n" +
+                   $"\n\t\tNome: {Nome}" +
+                   $"\n\t\tCpf: {CPF}" +
+                   $"\n\t\tIdade: {Idade}" +
+                   $"\n\t\tSexo = {Sexo}";
+                   }
+
         public Pessoa(string nome, float cpf, DateTime dataNascimento, string sexo)
         {
             Nome = nome;
@@ -81,6 +93,17 @@ namespace SistemaHospital
                 return false;
             }
         }
+        public bool FilaVaziaInternada()
+        {
+            if (internados.Count == 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
         public void CadastrarPessoaRecepcao()
         {
             string cpff;
@@ -89,12 +112,12 @@ namespace SistemaHospital
             string dNascimento;
 
             Console.Clear();
-            Console.WriteLine("--------- Cadastro de pessoa ---------\n");
-            Console.Write("Digite o Nome da Pessoa: ");
+            Console.WriteLine("\t--------- Cadastro de pessoa ---------\n");
+            Console.Write("\tDigite o Nome da Pessoa: ");
             string nome = Console.ReadLine();
             do
             {
-                Console.Write("Digite o CPF da Pessoa: ");
+                Console.Write("\tDigite o CPF da Pessoa: ");
                 cpff = Console.ReadLine();
                 if (!float.TryParse(cpff, out cpf))
                 {
@@ -103,15 +126,15 @@ namespace SistemaHospital
             } while (!float.TryParse(cpff, out cpf));
             do
             {
-                Console.Write("Digite a data de Nascimento da pessoa: ");
+                Console.Write("\tDigite a data de Nascimento da pessoa (dd/mm/aaaa): ");
                 dNascimento = Console.ReadLine();
                 if (!DateTime.TryParse(dNascimento, out dataNascimento))
                 {
                     Console.WriteLine("\tData Digitada Incorreta!\n");
                 }
             } while (!DateTime.TryParse(dNascimento, out dataNascimento));
-            Console.WriteLine("Digite o Sexo\n[M] - Masculino\n[F] - Feminino");
-            Console.Write("Opção: ");
+            Console.WriteLine("\tDigite o Sexo\n\t[M] - Masculino\n\t[F] - Feminino");
+            Console.Write("\tOpção: ");
             string sexo = Console.ReadLine().ToUpper();
             if (sexo == "M")
             {
@@ -129,19 +152,18 @@ namespace SistemaHospital
             {
                 Console.WriteLine("\n\t--->> Fila Prioritária <<----");
                 preferencial.Add(paciente);
-                Console.ReadKey();
             }
             else
             {
                 Console.WriteLine("\n\t--->> Fila Normal <<----");
                 normal.Add(paciente);
-                Console.ReadKey();
             }
+            Console.ReadKey();
         }
         public void ExibirPessoasFilaPrioritaria()
         {
             Console.Clear();
-            Console.WriteLine("---- Fila Preferencial ----");
+            Console.WriteLine("\t-------- Fila Preferencial --------");
             if (FilaVaziaPreferencial())
             {
                 Console.WriteLine("\n\tFila Vazia");
@@ -149,7 +171,6 @@ namespace SistemaHospital
             }
             else
             {
-                Console.Clear();
                 preferencial.ForEach(paciente => Console.WriteLine(paciente.InformacoesPessoa()));
                 Console.ReadKey();
             }
@@ -157,24 +178,31 @@ namespace SistemaHospital
         public void ExibirPessoasFilaNormal()
         {
             Console.Clear();
-            Console.WriteLine("---- Fila Normal ----");
+            Console.WriteLine("\t -------- Fila Normal --------");
             if (FilaVaziaNormal())
             {
-
                 Console.WriteLine("\n\tFila Vazia");
-                Console.ReadKey();
             }
             else
             {
                 Console.Clear();
                 normal.ForEach(paciente => Console.WriteLine(paciente.InformacoesPessoa()));
-                Console.ReadKey();
             }
+            Console.ReadKey();
         }
         public void ExibirPessoasInternadas()
         {
             Console.Clear();
-            Internados.ForEach(paciente => Console.WriteLine(paciente.InformacoesInternados()));
+            Console.WriteLine("\t-------- Fila Internados --------");
+            if (FilaVaziaInternada())
+            {
+                Console.WriteLine("\n\tFila Vazia");
+            }
+            else
+            {
+                internados.ForEach(paciente => Console.WriteLine(paciente.InformacoesInternados()));
+                Console.ReadKey();
+            }
             Console.ReadKey();
         }
         public void chamarTriagem()
@@ -186,7 +214,7 @@ namespace SistemaHospital
             }
             else if (FilaVaziaPreferencial())
             {
-                Console.WriteLine(normal[0].InformacoesPessoa());
+                Console.WriteLine(normal[0].IformacoesTriagem());
                 paciente = normal[0];
                 normal.Remove(normal[0]);
                 InformacoesTriagem(paciente);
@@ -196,14 +224,14 @@ namespace SistemaHospital
             {
                 if (cont < 2)
                 {
-                    Console.WriteLine(preferencial[0].InformacoesPessoa());
+                    Console.WriteLine(preferencial[0].IformacoesTriagem());
                     paciente = preferencial[0];
                     preferencial.Remove(preferencial[0]);
                     InformacoesTriagem(paciente);
                 }
                 else
                 {
-                    Console.WriteLine(normal[0].InformacoesPessoa());
+                    Console.WriteLine(normal[0].IformacoesTriagem());
                     paciente = normal[0];
                     normal.Remove(normal[0]);
                     InformacoesTriagem(paciente);
@@ -222,77 +250,80 @@ namespace SistemaHospital
             string diasSintomasconf;
             do
             {
-                Console.Write("Informe os Batimentos cardíacos: ");
+                Console.Write("\n\t\tInforme os Batimentos cardíacos: ");
                 batimentosconf = Console.ReadLine();
                 if (!int.TryParse(batimentosconf, out batimentos))
                 {
-                    Console.WriteLine("\tBatimesntos Digitado de forma Incorreta!!\n");
+                    Console.WriteLine("\t\t\tBatimesntos Digitado de forma Incorreta!!\n");
                 }
             } while (!int.TryParse(batimentosconf, out batimentos));
             do
             {
-                Console.Write("Informe a Saturação: ");
+                Console.Write("\n\t\tInforme a Saturação: ");
                 saturacaoconf = Console.ReadLine();
                 if (!int.TryParse(saturacaoconf, out saturacao))
                 {
-                    Console.WriteLine("\tSaturação Digitada de forma Incorreta!!\n");
+                    Console.WriteLine("\t\t\tSaturação Digitada de forma Incorreta!!\n");
                 }
             } while (!int.TryParse(saturacaoconf, out saturacao));
             do
             {
-                Console.Write("Digite a Pressão:");
+                Console.Write("\n\t\tDigite a Pressão:");
                 pressaoconf = Console.ReadLine();
                 if (!int.TryParse(pressaoconf, out pressao))
                 {
-                    Console.WriteLine("\tPressão Digitada de forma Incorreta!!\n");
+                    Console.WriteLine("\t\t\tPressão Digitada de forma Incorreta!!\n");
                 }
             } while (!int.TryParse(pressaoconf, out pressao));
             do
             {
-                Console.Write("Dias sintomas: ");
+                Console.Write("\n\t\tDias sintomas: ");
                 diasSintomasconf = Console.ReadLine();
                 if (!int.TryParse(diasSintomasconf, out diasSintomas))
                 {
-                    Console.WriteLine("\tDias digitado de forma Incorreta!!\n");
+                    Console.WriteLine("\t\t\tDias digitado de forma Incorreta!!\n");
                 }
             } while (!int.TryParse(diasSintomasconf, out diasSintomas));
 
             if (diasSintomas < 3)
             {
                 Console.Clear();
-                Console.WriteLine("------------------- Retorno -------------------");
-                Console.WriteLine("\nRetornar quando Passar de 3 dias de sintomas!!");
+                Console.WriteLine("\n\t\t------------------- Retorno -------------------");
+                Console.WriteLine("\n\t\tRetornar quando Passar de 3 dias de sintomas!!");
             }
             else
             {
-                Console.Write("\n\tPaciente Vai Realizar teste de Covid? (S/N): ");
+                Console.Write("\n\t\tPaciente Vai Realizar teste de Covid? (S/N): ");
                 string testeconf = Console.ReadLine().ToUpper();
                 if (testeconf == "S" || testeconf == "SIM")
                 {
-                    Console.Write("\n\tResultado Positivo (S/N): ");
+                    Console.Write("\n\t\tResultado Positivo (S/N): ");
                     string resultadocovid = Console.ReadLine().ToUpper();
                     if (resultadocovid == "S" || resultadocovid == "SIM")
                     {
-                        Console.Write("\n\tPaciente Vai ser Internado? (S/N): ");
+                        Console.Write("\n\t\tPaciente Vai ser Internado? (S/N): ");
                         string internar = Console.ReadLine().ToUpper();
                         if (internar == "S" || internar == "SIM")
                         {
-                            Console.WriteLine("\n\tPaciente Internado!!");
-                            Internados.Add(new Pessoa(paciente, new Triagem(batimentos, saturacao, pressao, diasSintomas)));
+                            Console.WriteLine("\n\t\tPaciente Internado!!");
+                            internados.Add(new Pessoa(paciente, new Triagem(batimentos, saturacao, pressao, diasSintomas)));
                         }
                         else
                         {
-                            Console.WriteLine($"\tPaciente vai cumprir quarentena em casa até de 15 dias");
+                            Console.WriteLine($"\t\tPaciente vai cumprir quarentena em casa até de 15 dias");
+                            todosPacientes.Add(new Pessoa(paciente, new Triagem(batimentos, saturacao, pressao, diasSintomas)));
                         }
                     }
                     else
                     {
-                        Console.WriteLine("\tDispensando Teste de Covid Negativo!!");
+                        Console.WriteLine("\t\tDispensando Teste de Covid Negativo!!");
+                        todosPacientes.Add(new Pessoa(paciente, new Triagem(batimentos, saturacao, pressao, diasSintomas)));
                     }
                 }
                 else
                 {
-                    Console.WriteLine("\tDispensando Sem suspeita de Covid!!");
+                    Console.WriteLine("\t\tDispensando Sem suspeita de Covid!!");
+                    todosPacientes.Add(new Pessoa(paciente, new Triagem(batimentos, saturacao, pressao, diasSintomas)));
                 }
             }
         }

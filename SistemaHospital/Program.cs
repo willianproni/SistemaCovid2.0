@@ -25,30 +25,35 @@ namespace SistemaHospital
                         Console.ReadKey();
                         break;
                     case "3":
-                        MenuFilas();
-                        opcfila = Console.ReadLine();
-                        switch (opcfila)
+                        do
                         {
-                            case "1":
-                                pessoa.ExibirPessoasFilaPrioritaria();
-                                break;
-                            case "2":
-                                pessoa.ExibirPessoasFilaNormal();
-                                break;
-                            case "3":
-                                pessoa.ExibirPessoasInternadas();
-                                break;
-                            case "0":
-                                break;
-                            default:
-                                Console.WriteLine("Opção Inválida");
-                                break;
-                        }
+                            MenuFilas();
+                            opcfila = Console.ReadLine();
+                            switch (opcfila)
+                            {
+                                case "1":
+                                    pessoa.ExibirPessoasFilaPrioritaria();
+                                    break;
+                                case "2":
+                                    pessoa.ExibirPessoasFilaNormal();
+                                    break;
+                                case "3":
+                                    pessoa.ExibirPessoasInternadas();
+                                    break;
+                                case "0":
+                                    break;
+                                default:
+                                    Console.WriteLine("\n\t\t\tOpção Inválida");
+                                    Console.ReadKey();
+                                    break;
+                            }
+                        } while (opcfila != "0");
                         break;
                     case "0":
                         break;
                     default:
-                        Console.WriteLine("Opção Inválida");
+                        Console.WriteLine("\n\t\t\tOpção Inválida");
+                        Console.ReadKey();
                         break;
                 }
             } while (opc != "0");
@@ -57,24 +62,24 @@ namespace SistemaHospital
         public static void MenuPrincipal()
         {
             Console.Clear();
-            Console.WriteLine("----- Menu Principal -----" +
-                              "\n[1] - Cadastrar Pessoa" +
-                              "\n[2] - Realizar Triagem" +
-                              "\n[3] - Verificar Filas" +
-                              "\n[0] - Sair do sistema" +
-                              "\n-------------------------");
-            Console.Write("Opção: ");
+            Console.WriteLine("\t\t\t----- Menu Principal -----" +
+                              "\n\t\t\t[1] - Cadastrar Pessoa" +
+                              "\n\t\t\t[2] - Realizar Triagem" +
+                              "\n\t\t\t[3] - Verificar Filas" +
+                              "\n\t\t\t[0] - Sair do sistema" +
+                              "\n\t\t\t-------------------------");
+            Console.Write("\t\t\tOpção: ");
         }
         public static void MenuFilas()
         {
             Console.Clear();
-            Console.WriteLine("----- Explorar Filas -----" +
-                              "\n[1] - Fila Prioritário" +
-                              "\n[2] - Fila Normal" +
-                              "\n[3] - Internados" +
-                              "\n[0] - Voltar pro Menu Principal" +
-                              "\n--------------------------");
-            Console.Write("Opção: ");
+            Console.WriteLine("\t\t\t----- Explorar Filas -----" +
+                              "\n\t\t\t[1] - Fila Prioritário" +
+                              "\n\t\t\t[2] - Fila Normal" +
+                              "\n\t\t\t[3] - Lista Internados" +
+                              "\n\t\t\t[0] - Voltar ao Menu Principal" +
+                              "\n\t\t\t--------------------------");
+            Console.Write("\t\t\tOpção: ");
         }
 
     }
