@@ -25,6 +25,9 @@ namespace SistemaHospital
                         Console.ReadKey();
                         break;
                     case "3":
+                        pessoa.RealizarAltaPaciente();
+                        break;
+                    case "4":
                         do
                         {
                             MenuFilas();
@@ -65,7 +68,8 @@ namespace SistemaHospital
             Console.WriteLine("\t\t\t----- Menu Principal -----" +
                               "\n\t\t\t[1] - Cadastrar Pessoa" +
                               "\n\t\t\t[2] - Realizar Triagem" +
-                              "\n\t\t\t[3] - Verificar Filas" +
+                              "\n\t\t\t[3] - Realizar Alta Paciente" +
+                              "\n\t\t\t[4] - Verificar Filas" +
                               "\n\t\t\t[0] - Sair do sistema" +
                               "\n\t\t\t-------------------------");
             Console.Write("\t\t\tOpção: ");

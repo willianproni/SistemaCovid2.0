@@ -33,6 +33,11 @@ namespace SistemaHospital
                    $"\n---------------------";
         }
 
+        public string ArquivoPaciente()
+        {
+            return $"{Nome.PadRight(50).Substring(0, 50)}{CPF.ToString().PadRight(11, '0')}{DataNascimento.ToString("dd/MM/yyyy")}{Sexo.PadRight(10).Substring(0, 10)}";
+        }
+
         public string InformacoesInternados()
         {
             return $"---------------------" +
@@ -70,7 +75,9 @@ namespace SistemaHospital
 
         public Pessoa()
         {
+
         }
+
         public bool FilaVaziaPreferencial()
         {
             if (preferencial.Count == 0)
@@ -151,12 +158,15 @@ namespace SistemaHospital
             if (paciente.Idade >= 60)
             {
                 Console.WriteLine("\n\t--->> Fila Prioritária <<----");
+                new Arquivo(paciente);
                 preferencial.Add(paciente);
             }
             else
             {
                 Console.WriteLine("\n\t--->> Fila Normal <<----");
+                new Arquivo(paciente);
                 normal.Add(paciente);
+                
             }
             Console.ReadKey();
         }
@@ -326,6 +336,28 @@ namespace SistemaHospital
                     todosPacientes.Add(new Pessoa(paciente, new Triagem(batimentos, saturacao, pressao, diasSintomas)));
                 }
             }
+        }
+        public void RealizarAltaPaciente()
+        {
+            Console.Clear();
+            Console.WriteLine("Pacientes Internados: " + internados.Count() + " paciente(s)\n");
+
+            if (FilaVaziaInternada())
+            {
+                Console.WriteLine("Nenhum paciente internado");
+            }
+            else
+            {
+
+            
+/*                 Console.Write("Digite o nome do Paciente a Receber alta: ");
+                 string nome = Console.ReadLine();*/
+
+            internados.ForEach(p => Console.WriteLine(p.InformacoesInternados()));
+            /*internados.FindAll(p => p.Nome == nome);*/
+            internados.Remove(internados[0]);
+            }
+            Console.ReadKey();
         }
     }
 }
